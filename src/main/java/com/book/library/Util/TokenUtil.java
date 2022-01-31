@@ -40,9 +40,9 @@ public class TokenUtil {
 	* @param token
 	* @return
 	*/
-	public Long decodeToken(String token)
+	public Integer decodeToken(String token)
 	 {
-	 Long userid;
+	 Integer userid;
 	           //for verification algorithm
 	           Verification verification = null;
 	try {
@@ -56,7 +56,7 @@ public class TokenUtil {
 	           DecodedJWT decodedjwt=jwtverifier.verify(token);
 
 	           Claim claim=decodedjwt.getClaim("user_id");
-	           userid=claim.asLong();    
+	           userid=claim.asInt();    
 	           return userid;
 	     
 	 }

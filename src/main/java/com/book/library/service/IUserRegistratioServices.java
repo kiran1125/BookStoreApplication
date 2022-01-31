@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.book.library.Util.Response;
+import com.book.library.dto.LoginDTO;
 import com.book.library.dto.UserRegistrationDTO;
 import com.book.library.model.UserRegistrationData;
 
@@ -19,5 +20,9 @@ public interface IUserRegistratioServices {
     UserRegistrationData updateUserData(Integer id,UserRegistrationDTO userDTO);
 
     void deleteEmployeeData(Integer id);
+
+	Response loginDetails(LoginDTO loginDTO);
+
+    String verifyUser(String token);
     
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.book.library.Util.Response;
 import com.book.library.Util.TokenUtil;
+import com.book.library.dto.LoginDTO;
 import com.book.library.dto.UserRegistrationDTO;
 import com.book.library.exceptions.UserNotFoundException;
 import com.book.library.exceptions.UserRegisrationException;
@@ -65,6 +66,33 @@ public class UserRegistrationServices implements IUserRegistratioServices {
         
     }
 
-    
+    @Override
+    public Response loginDetails(LoginDTO loginDTO) {
+        Optional<UserRegistrationData> user=userRepo.findByEmailId(loginDTO.getEmailId());
+        if(user.isPresent()){
+            String userData = user.get().getPassword();
+            if(userData.equals(loginDTO.getPassword())){
+                String token=tokenUtil.createToken(user.get().getUserId());
+                return new Response(200, "User Login Successful", token);
+            }else{
+                return new Response(404, "Password Wrong");
+            }
+        }else{
+            return new Response(400, "Login Failed");
+        }
+        
+    }
+
+    @Override
+    public String verifyUser(String token) {
+
+        Integer id=tokenUtil.decodeToken(token);
+        Optional<UserRegistrationData> isPresent = userRepo.findById(id);
+
+        if (isPresent.isPresent()) {
+            return isPresent.toString();
+        } else
+            return null;
+    }  
 
 }

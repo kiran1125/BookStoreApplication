@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import com.book.library.Util.Response;
 import com.book.library.Util.TokenUtil;
+import com.book.library.dto.LoginDTO;
 import com.book.library.dto.ResponseDTO;
 import com.book.library.dto.UserRegistrationDTO;
 import com.book.library.model.UserRegistrationData;
@@ -67,5 +68,23 @@ public class UserRegistrationController {
 		ResponseDTO responseDTO = new ResponseDTO("delete data is Successful of id :", id);
 		return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
 	}
+
+    @PostMapping("/login")
+	public ResponseEntity<Response> login(@RequestBody LoginDTO loginDTO){
+		Response response=userRegistratioServices.loginDetails(loginDTO);
+		return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+	}
+
+    @PostMapping("/user/verify/{token}")
+    public ResponseEntity<ResponseDTO> login(@PathVariable String token){
+        String userVerification = userRegistratioServices.verifyUser(token);
+        if (userVerification != null) {
+            ResponseDTO responseDTO = new ResponseDTO("User verified :", userVerification);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        } else {
+            ResponseDTO responseDTO = new ResponseDTO("User data not Exist:", userVerification);
+            return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
+        }
+    }
     
 }
