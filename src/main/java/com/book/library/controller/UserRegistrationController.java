@@ -76,15 +76,9 @@ public class UserRegistrationController {
 	}
 
     @PostMapping("/user/verify/{token}")
-    public ResponseEntity<ResponseDTO> login(@PathVariable String token){
-        String userVerification = userRegistratioServices.verifyUser(token);
-        if (userVerification != null) {
-            ResponseDTO responseDTO = new ResponseDTO("User verified :", userVerification);
-            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-        } else {
-            ResponseDTO responseDTO = new ResponseDTO("User data not Exist:", userVerification);
-            return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
-        }
+    public Boolean login(@PathVariable String token){
+        Boolean verified = userRegistratioServices.verifyUser(token);
+        return verified;
     }
     
 }

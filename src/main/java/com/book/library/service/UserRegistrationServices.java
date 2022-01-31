@@ -1,5 +1,6 @@
 package com.book.library.service;
 
+import java.io.Console;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,15 +85,14 @@ public class UserRegistrationServices implements IUserRegistratioServices {
     }
 
     @Override
-    public String verifyUser(String token) {
+    public Boolean verifyUser(String token) {
 
         Integer id=tokenUtil.decodeToken(token);
-        Optional<UserRegistrationData> isPresent = userRepo.findById(id);
-
-        if (isPresent.isPresent()) {
-            return isPresent.toString();
-        } else
-            return null;
+        UserRegistrationData userData = userRepo.findById(id).orElseThrow(() 
+        -> new UserNotFoundException("user Not Found"));
+       userData.setVerify(true);
+       userRepo.save(userData);
+       return userData.getVerify();
     }  
 
 }

@@ -13,10 +13,12 @@ import javax.persistence.Table;
 import com.book.library.dto.UserRegistrationDTO;
 
 import lombok.Data;
+import lombok.Setter;
 
 @Entity
 @Table(name = "userregistration")
 @Data
+@Setter
 public class UserRegistrationData {
 
     @Id
@@ -41,7 +43,7 @@ public class UserRegistrationData {
 
     private LocalDate updatedDate;
 
-    private Boolean verify;
+    private Boolean verify = false;
 
     public void createUser(UserRegistrationDTO userDTO) {
         this.firstName = userDTO.getFirstName();

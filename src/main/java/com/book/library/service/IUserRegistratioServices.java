@@ -23,6 +23,6 @@ public interface IUserRegistratioServices {
 
 	Response loginDetails(LoginDTO loginDTO);
 
-    String verifyUser(String token);
+    Boolean verifyUser(String token);
     
 }
