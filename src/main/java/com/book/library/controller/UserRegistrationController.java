@@ -80,5 +80,10 @@ public class UserRegistrationController {
         Boolean verified = userRegistratioServices.verifyUser(token);
         return verified;
     }
-    
+
+    @PostMapping("/forgatpassword")
+    public ResponseEntity<Response> forgotPassword(@RequestBody LoginDTO loginDTO){
+		Response response=userRegistratioServices.changePassword(loginDTO);
+		return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+	}
 }

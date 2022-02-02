@@ -24,5 +24,7 @@ public interface IUserRegistratioServices {
 	Response loginDetails(LoginDTO loginDTO);
 
     Boolean verifyUser(String token);
+
+    Response changePassword(LoginDTO loginDTO);
     
 }

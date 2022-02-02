@@ -93,6 +93,18 @@ public class UserRegistrationServices implements IUserRegistratioServices {
        userData.setVerify(true);
        userRepo.save(userData);
        return userData.getVerify();
+    }
+
+    @Override
+    public Response changePassword(LoginDTO loginDTO) {
+        Optional<UserRegistrationData> user=userRepo.findByEmailId(loginDTO.getEmailId());
+        if(user.isPresent()){
+            user.get().setPassword(loginDTO.getPassword());
+            userRepo.save(user.get());
+            return new Response(200, "Password Changed Successful");
+        }else{
+            return new Response(404, "user not found");
+        }
     }  
 
 }
